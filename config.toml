@@ -24,6 +24,7 @@ disqusShortname = "ink-demo"
 	disableDisqusTypes = ["page"]
 
 	featherIconsCDN = true
+	favicon = "true"
 
 	mode = "auto" # "dark" or "auto"
 	customCSS = "css/syntax.css"  # Custom CSS applied to default styles.
