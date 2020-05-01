@@ -15,7 +15,7 @@ googleAnalytics = "UA-123-45"
 disqusShortname = "ink-demo"
 
 [params]
-	subtitle = "Engineer studying Artificial Intelligence and Machine Learning"
+	subtitle = "Thoughts on Artificial Intelligence and Machine Learning"
 
 	# Optional 64x64 avatar image.
 	# avatar = "https://image.freepik.com/free-vector/young-man-head-with-beard-avatar-character_24877-36786.jpg"
