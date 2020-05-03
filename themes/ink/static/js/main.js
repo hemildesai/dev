@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
   var toggle = document.getElementById("scheme-toggle");
 
   var scheme = "light";
@@ -11,11 +11,11 @@ document.addEventListener("DOMContentLoaded", function(){
     scheme = "dark";
   }
 
-  if(savedScheme) {
+  if (savedScheme) {
     scheme = savedScheme;
   }
 
-  if(scheme == "dark") {
+  if (scheme == "dark") {
     darkscheme(toggle, container);
   } else {
     lightscheme(toggle, container);
@@ -27,6 +27,21 @@ document.addEventListener("DOMContentLoaded", function(){
     } else if (toggle.className === "dark") {
       lightscheme(toggle, container);
     }
+  });
+
+  var btn = $("#scroll-to-top");
+
+  $(window).scroll(function () {
+    if ($(window).scrollTop() > 300) {
+      btn.addClass("show");
+    } else {
+      btn.removeClass("show");
+    }
+  });
+
+  btn.on("click", function (e) {
+    e.preventDefault();
+    $("html, body").animate({ scrollTop: 0 }, "100");
   });
 });
 

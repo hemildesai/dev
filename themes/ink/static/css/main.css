@@ -541,3 +541,24 @@ ul {
         display: none;
     }
 }
+
+#scroll-to-top {
+    display: inline-block;
+    position: fixed;
+    bottom: 2%;
+    right: 5%;
+    transition: background-color 0.3s, opacity 0.5s, visibility 0.5s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+}
+
+#scroll-to-top:hover {
+    cursor: pointer;
+    border: 0;
+}
+
+#scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
