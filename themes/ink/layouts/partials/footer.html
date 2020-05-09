@@ -8,3 +8,6 @@
 {{- with .Site.Params.Social -}}
 <script>feather.replace()</script>
 {{- end -}}
+{{ if or .Params.math .Site.Params.math }}
+	{{ partial "math.html" . }}
+{{ end }}

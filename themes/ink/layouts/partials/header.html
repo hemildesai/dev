@@ -46,7 +46,4 @@
 	{{- if isset .Site.Params "customjs" -}}
 		{{- range .Site.Params.customJS }}<script src="{{ $.Site.BaseURL }}{{ . }}"></script>{{- end }}
 	{{- end }}
-	{{ if or .Params.math .Site.Params.math }}
-		{{ partial "math.html" . }}
-	{{ end }}
 </head>
