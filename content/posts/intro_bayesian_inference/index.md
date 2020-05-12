@@ -6,6 +6,8 @@ math: true
 tags: ["Bayesian Inference", "Probabilistic ML"]
 ---
 
+> Foreword: The definitions and notations I've used in the post may deviate from the norm. I've used them in the form that has best helped me understand the concept. If you think that any of them is fundamentally wrong or if any citations are missing, please comment below or reach out to me and I'll correct my mistakes.
+
 ## Definitions
 
 In the simplest of terms, Bayesian Inference is **Inference** using **Bayes' Theorem**. Let's define these individual components further:
@@ -159,7 +161,7 @@ Now, let's take a look at the entire process in practice. We'll take a look at t
 2. For the second example, we'll select a prior biased in the opposite direction (\$\alpha = 1,\ \beta = 5$). We'll see the posterior change over 250 coin tosses in this example. We'll see that even if we have a prior biased in the opposite direction, the posterior distribution will eventually get to the point where it's mode is equal to the true $\lambda\$.
    {{<figure src="beta_bayes_2.gif" class="blogimg">}}
 
-I hope this gives a good intuition for the entire Bayesian Inference process.
+I hope this gives a good intuition for the entire Bayesian Inference process. I'd appreciate any feedback and constructive criticism.
 
 ## Further Learning
 
