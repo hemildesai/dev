@@ -15,12 +15,12 @@
 		<nav class="nav social">
 			<ul class="flat">
 				{{- range $index, $key := .Site.Params.Social -}}
-					<li><a href="{{ $key.url }}" title="{{ $key.name }}" target="_blank"><i data-feather="{{ $key.icon }}"></i></a></li>
+					<li><a href="{{ $key.url }}" title="{{ $key.name }}" target="_blank" rel="noopener"><i data-feather="{{ $key.icon }}"></i></a></li>
 				{{- end -}}
 			</ul>
 		</nav>
                 {{- if or (eq .Site.Params.mode "auto") (eq .Site.Params.mode "dark") -}}
-                <span class="scheme-toggle"><a href="#" id="scheme-toggle"></a>
+                <span class="scheme-toggle"><a href="#" id="scheme-toggle" title="theme"></a>
                 {{- end -}}
 	</div>
 	{{ end }}
@@ -35,5 +35,5 @@
 		</ul>
 	</nav>
 
-	<span class="scheme-toggle" hidden><a href="#" id="scheme-toggle"></a>
+	<span class="scheme-toggle" hidden><a href="#" id="scheme-toggle" title="theme"></a>
 </div>
