@@ -12,7 +12,7 @@ pygmentscodefencesguesssyntax = true
 pygmentsUseClasses=true
 
 googleAnalytics = "UA-123-45"
-disqusShortname = "ink-demo"
+disqusShortname = "hemil10"
 
 [params]
 	subtitle = "Thoughts on Artificial Intelligence and Machine Learning"
@@ -66,6 +66,11 @@ url = "https://twitter.com/hemildesai10"
 name = "LinkedIn"
 icon = "linkedin"
 url = "https://linkedin.com/in/hemildesai"
+
+[[params.social]]
+name = "Resume"
+icon = "file-text"
+url = "https://drive.google.com/file/d/0B-GDWDGrOAVzXzdMY0FfN3N5YTlpRkJqRzZmaGNYeVcxNFNr/view"
 
 [taxonomies]
    tag = "tags"
