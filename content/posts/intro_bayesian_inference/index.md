@@ -24,7 +24,7 @@ $$
 
 For the purpose of this post, let's define the inference problem as follows:
 
-Given a dataset $\mathcal{D} \sim \{X,Y\},\ X\ \in\ \mathbb{R}^{N\times Q},\ Y\ \in\ \mathbb{R}^{N\times D}$ consisting of $N$ inputs and observed outputs and a model $\mathcal{H}$ with parameters $\theta$, we want to learn $\theta$ from $\mathcal{D}$ so that we can infer the output $y^\*$, for some unseen input $x^\* \notin\ \mathcal{D}$, so that it is closest to the real output $y^\*\_{true}$. In other words, we're trying to learn a function $\mathcal{H}$ parameterized by $\theta$ from $\mathcal{D}$ such that
+Given a dataset $\mathcal{D} \sim \{X,Y\},\ X\ \in\ \mathbb{R}^{N\times Q},\ Y\ \in\ \mathbb{R}^{N\times D}$ consisting of $N$ inputs and observed outputs and a model $\mathcal{H}$ with parameters $\theta$, we want to learn $\theta$ from $\mathcal{D}$ in order to infer the output $y^\*$, for some unseen input $x^\* \notin\ \mathcal{D}$, such that it is closest to the real output $y^\*\_{true}$. In other words, we're trying to learn a function $\mathcal{H}$ parameterized by $\theta$ from $\mathcal{D}$ such that
 
 $$
 \large\mathcal{H}\_{\theta}(x^\*) \approx y^\*\_{true} \tag{2}
@@ -40,27 +40,26 @@ Let's define the $Likelihood$ as $P(\mathcal{D}\mid\theta)$. Intuitively, this m
 
 Before starting to learn, we might have some beliefs or assumptions about the parameters. Let's encode these as $P(\theta)$, calling it the $Prior$.
 
-Now that we've established the $Prior$ and the $Likelihood$, let's use equation $(1)$ to perform the learning step of Inference in the following manner:
+Once we've established the $Prior$ and the $Likelihood$, we can use equation $(1)$ to perform the learning step of Inference in the following manner:
 
 $$
 \large \underbrace{P(\theta \mid \mathcal{D})}\_{Posterior} = \frac{\overbrace{P(\mathcal{D}, \theta)}^{Likelihood}\ \times \overbrace{P(\theta)}^{Prior}}{\underbrace{P(\mathcal{D})}_{Evidence}} \tag{3}
 $$
 
-The $Evidence$ is the marginalized likelihood. It measures how well our chosen model $\mathcal{H}$ represent the data.<cite>[^1]</cite>
+The $Evidence$ is the marginalized likelihood. It measures how well our chosen model $\mathcal{H}$ represents the data.<cite>[^1]</cite>
 [^1]: To learn more about how the Evidence is used in Model Comparison, see Section 2.1 and 2.2 of [David MacKay's Thesis](http://www.inference.org.uk/mackay/thesis.pdf).
 
 The $Posterior$ captures the distribution of our parameters given the data. Ideally, it should have peaks at values that have a high likelihod. This is what we need to perform the next step of Inference.
 
-Now that we have the $Posterior$, given $x^\*$, we can predict $y^\*$ as follows:
+Given the $Posterior$, given $x^\*$, we can predict $y^\*$ as follows:
 
 $$
 \large P(y^\*\mid{x^\*, \mathcal{D}}) = \int{P(y^\*\mid{x^\*, \theta})}{P(\theta \mid \mathcal{D})}d\theta \tag{4}
 $$
 
-Now that we have the distribution for $y^\*$, we can calculate $E\[y^\*\]\ or\ \mu_{y^\*}$ as the predictive mean and $E\[(y^\* - E\[y^\*\])^2\]\ or\ \sigma_{y^\*}^2$ as the predictive uncertainty.<cite>[^2]</cite>
+With the distribution for $y^\*$, we can calculate $E\[y^\*\]\ or\ \mu_{y^\*}$ as the predictive mean and $E\[(y^\* - E\[y^\*\])^2\]\ or\ \sigma_{y^\*}^2$ as the predictive uncertainty.<cite>[^2]</cite>
 [^2]: I learnt about the terms Predictive Mean and Predictive Uncertainty from http://www.cs.ox.ac.uk/people/yarin.gal/website/blog_3d801aa532c1ce.html initially.
 
-Now let's use these definitions to perform inference on an example problem.
 
 ## Bent Coin Problem
 
@@ -68,21 +67,19 @@ The rest of this post is about applying the steps of Bayesian Inference to the B
 
 ### Problem Statement
 
-Let's assume we have a bent coin with the probability of landing heads as $\lambda$. We can observe $N$ number of coin tosses from the bent coin. Each coin toss can be expressed as a Bernoulli trial as follows:
-
-If the outcome of the coin toss is represented by $y\in \\{0,1\\},\medspace 0 \rightarrow \text{Tails},\ 1 \rightarrow \text{Heads}$, then the probability of $y$ given the above biased coin can be expressed as:
+Let's assume we have a bent coin with the probability of landing heads as $\lambda$. We can observe $N$ number of coin tosses from the bent coin. Each coin toss can be expressed as a Bernoulli trial. If the outcome of the coin toss is represented by $y\in \\{0,1\\},\medspace 0 \rightarrow \text{Tails},\ 1 \rightarrow \text{Heads}$, then the probability of $y$ given the above biased coin can be expressed as:
 
 $$p(y\mid \lambda) = \lambda^y(1 - \lambda)^{(1-y)} \tag{5}$$
 
-This is also the likelihood of a single coin toss as we've established above. If you think of $N$ coin tosses, the probability of $m$ heads then takes the form of a Binomial distribution as:
+This is also the likelihood of a single coin toss. If you think of $N$ coin tosses, the probability of $m$ heads then takes the form of a Binomial distribution as:
 
 $$P(\mathcal{D}\mid\lambda,m) = \dbinom{N}{m}\lambda^m(1-\lambda)^{N-m}\qquad\mathcal{D}\in \\{0,1\\}^N \tag{6}$$
 
-Now, for inference, we're trying to predict $\lambda$ so that we can then consequently predict the probability that the next coin toss is a head. So, our model here is just the distribution of $\lambda$(that's all we need to predict) and the model parameter is just $\lambda$. We have established the likelihood, so now we need to select the prior.
+Note that, for inference, we're trying to predict $\lambda$ so that we can then consequently predict the probability that the next coin toss is a head. So, our model here is just the distribution of $\lambda$(that's all we need to predict) and the model parameter is just $\lambda$.
 
 ### Prior Selection
 
-We're trying to put a prior on $\lambda$, which is a probability. A very common distribution on probabilities is the Beta distribution defined below:<cite>[^3]</cite>
+In order to perform Bayesian Inference, we need to put a prior on $\lambda$, which is a probability. A very common distribution on probabilities is the Beta distribution defined below:<cite>[^3]</cite>
 [^3]: The integral for the Beta function is also called the Euler Integral of the first kind. To learn more about it's relation to the Gamma function see https://homepage.tudelft.nl/11r49/documents/wi4006/gammabeta.pdf.
 
 $$
@@ -121,7 +118,7 @@ P(\mathcal{D}) &= \int{P(\mathcal{D}\mid\lambda)P(\lambda)}d\lambda
 \end{aligned}
 $$
 
-Now let's plug in the values in $(10)$
+Next, let's plug in the values in $(10)$
 
 $$
 \begin{aligned}
@@ -153,7 +150,7 @@ This should be easy to show by using the above equations of the Beta and Gamma f
 
 ### Practical Example
 
-Now, let's take a look at the entire process in practice. We'll take a look at two examples. For both examples, we set the true probability of heads ($\lambda$) to $0.80$.
+Let's take a look at the entire process in practice. We'll take a look at two examples. For both examples, we set the true probability of heads ($\lambda$) to $0.80$.
 
 1. For the first example, we'll select a uniform prior (this can be done by setting both $\alpha$ and $\beta$ to $1$). We'll proceed through 100 random coin tosses from the bent coin with $\lambda=0.80$. After each toss, we'll calculate the new posterior. Then we'll combine these posteriors in an animated gif (shown below) to see how the posterior changes over time.
    {{<figure src="beta_bayes.gif" class="blogimg">}}
