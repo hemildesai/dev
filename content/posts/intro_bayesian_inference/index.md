@@ -85,10 +85,10 @@ In order to perform Bayesian Inference, we need to put a prior on $\lambda$, whi
 $$
 \begin{aligned}
 P(\lambda)& = \mathcal{Beta}(\lambda;\alpha, \beta) &\lambda \in [0,1]
-\\\\ \\\\ & = \frac{\lambda^{\alpha-1}(1-\lambda)^{\beta-1}}{\mathcal{B}(\alpha,\beta)} &\mathcal{B}(\alpha,\beta)\text{ is called the Beta function} &\hspace{4em} (7)
+\\\\ \\\\ & = \frac{\lambda^{\alpha-1}(1-\lambda)^{\beta-1}}{\mathcal{B}(\alpha,\beta)} &\mathcal{B}(\alpha,\beta)\text{ is called the Beta function} &\hspace{8em} (7)
 \\\\ \\\\ \mathcal{B}(\alpha,\beta)& = \int_0^1{\lambda^{\alpha-1}(1-\lambda)^{\beta-1}}d\lambda &&
-\\\\ \\\\ & = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)} &\Gamma(\alpha)\text{ is called the Gamma function} &\hspace{4em} (8)
-\\\\ \\\\ \Gamma(\alpha)& = (\alpha-1)!&&\hspace{4em} (9)
+\\\\ \\\\ & = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)} &\Gamma(\alpha)\text{ is called the Gamma function} &\hspace{8em} (8)
+\\\\ \\\\ \Gamma(\alpha)& = (\alpha-1)!&&\hspace{8em} (9)
 \end{aligned}
 $$
 
@@ -141,7 +141,7 @@ P(y^\* \mid \mathcal{D}) &= \int{P(y^\*\mid\lambda)P(\lambda\mid\mathcal{D})d\la
 \\\\ \\\\ &= \begin{cases}
 \large\frac{m + \alpha}{N+\alpha+\beta}\qquad &\text{if } y^\*=1
 \\\\ \\\\ \large\frac{N - m + \beta}{N+\alpha+\beta}\qquad &\text{if } y^\*=0
-\end{cases}&\hspace{11.5em}(13)
+\end{cases}&\hspace{10.5em}(13)
 \end{aligned}
 $$
 

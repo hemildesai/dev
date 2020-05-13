@@ -562,3 +562,12 @@ ul {
     opacity: 1;
     visibility: visible;
 }
+
+/* Hack for responsive tags in Katex */
+@media screen and (max-width: 1366px) {
+    .tag {
+        position: relative !important;
+        margin-left: 40px;
+        overflow-x: auto !important;
+    }
+}
