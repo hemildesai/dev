@@ -39,12 +39,72 @@
 
 	<link rel="preconnect" href="https://code.jquery.com" async >
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
-	{{ if and (isset .Site.Params "social") (isset .Site.Params "feathericonscdn") (eq .Site.Params.featherIconsCDN true) -}}
+	{{ if and (isset .Site.Params "social") -}}
 		<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-	{{- else if (isset .Site.Params "social") -}}
-		<script src="{{ .Site.BaseURL }}js/feather.min.js"></script>
 	{{ end }}
-		<script src="{{ .Site.BaseURL }}js/main.js"></script>
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				var toggle = document.getElementById("scheme-toggle");
+
+				var scheme = "light";
+				var savedScheme = localStorage.getItem("scheme");
+
+				var container = document.getElementsByTagName("html")[0];
+				var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+				if (prefersDark) {
+					scheme = "dark";
+				}
+
+				if (savedScheme) {
+					scheme = savedScheme;
+				}
+
+				if (scheme == "dark") {
+					darkscheme(toggle, container);
+				} else {
+					lightscheme(toggle, container);
+				}
+
+				toggle.addEventListener("click", () => {
+					if (toggle.className === "light") {
+						darkscheme(toggle, container);
+					} else if (toggle.className === "dark") {
+						lightscheme(toggle, container);
+					}
+				});
+
+				var btn = $("#scroll-to-top");
+
+				$(window).scroll(function () {
+					if ($(window).scrollTop() > 300) {
+					btn.addClass("show");
+					} else {
+					btn.removeClass("show");
+					}
+				});
+
+				btn.on("click", function (e) {
+					e.preventDefault();
+					$("html, body").animate({ scrollTop: 0 }, "100");
+				});
+			});
+
+			function darkscheme(toggle, container) {
+				localStorage.setItem("scheme", "dark");
+				toggle.innerHTML = feather.icons.sun.toSvg();
+				toggle.className = "dark";
+				container.className = "dark";
+			}
+
+			function lightscheme(toggle, container) {
+				localStorage.setItem("scheme", "light");
+				toggle.innerHTML = feather.icons.moon.toSvg();
+				toggle.className = "light";
+				container.className = "";
+			}
+
+		</script>
 	{{- if isset .Site.Params "customjs" -}}
 		{{- range .Site.Params.customJS }}<script src="{{ $.Site.BaseURL }}{{ . }}"></script>{{- end }}
 	{{- end }}

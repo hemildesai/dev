@@ -1,6 +1,6 @@
 languageCode = "en-us"
 title = "Hemil Desai"
-theme = "ink"
+theme = ["hugo-video", "ink"]
 paginate = 5
 
 copyright = "© Hemil Desai"

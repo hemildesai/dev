@@ -4,7 +4,7 @@ title: "Bio and Interests"
 type: "page"
 ---
 
-{{< figure src="/images/profile.png" class="avatar" >}}
+{{< figure src="/images/profile.png" class="avatar" alt="profile" >}}
 
 I'm an incoming Master's student in Computer Science, specializing in Artificial Intelligence and Machine Learning.
 

@@ -95,7 +95,7 @@ $$
 &nbsp;
 
 Let's take a look at how this distribution looks under different values of $\alpha$ and $\beta$
-{{<figure src="betas.png" class="blogimg">}}
+{{<figure src="betas.png" class="blogimg" alt="beta_distributions">}}
 
 The Beta distribution also has one very useful property in the context of this problem. Techincally, the Beta prior is called the [Conjugate Prior to the Likelihood function](https://en.wikipedia.org/wiki/Conjugate_prior). This means that the posterior distribution will have the same form as our prior. This property will make it a breeze to calculate our posterior analytically.
 
@@ -152,11 +152,11 @@ This should be easy to show by using the above equations of the Beta and Gamma f
 
 Let's take a look at the entire process in practice. We'll take a look at two examples. For both examples, we set the true probability of heads ($\lambda$) to $0.80$.
 
-1. For the first example, we'll select a uniform prior (this can be done by setting both $\alpha$ and $\beta$ to $1$). We'll proceed through 100 random coin tosses from the bent coin with $\lambda=0.80$. After each toss, we'll calculate the new posterior. Then we'll combine these posteriors in an animated gif (shown below) to see how the posterior changes over time.
-   {{<figure src="beta_bayes.gif" class="blogimg">}}
+1. For the first example, we'll select a uniform prior (this can be done by setting both $\alpha$ and $\beta$ to $1$). We'll proceed through 100 random coin tosses from the bent coin with $\lambda=0.80$. After each toss, we'll calculate the new posterior. Then we'll combine these posteriors in this video (shown below) to see how the posterior changes over time.
+   {{<video src="beta_bayes.mp4" muted="true">}}
 
 2. For the second example, we'll select a prior biased in the opposite direction (\$\alpha = 1,\ \beta = 5$). We'll see the posterior change over 250 coin tosses in this example. We'll see that even if we have a prior biased in the opposite direction, the posterior distribution will eventually get to the point where it's mode is equal to the true $\lambda\$.
-   {{<figure src="beta_bayes_2.gif" class="blogimg">}}
+   {{<video src="beta_bayes_2.mp4" muted="true">}}
 
 I hope this gives a good intuition for the entire Bayesian Inference process. I'd appreciate any feedback and constructive criticism.
 
