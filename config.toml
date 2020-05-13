@@ -11,7 +11,7 @@ pygmentscodefences = true
 pygmentscodefencesguesssyntax = true
 pygmentsUseClasses=true
 
-googleAnalytics = "UA-123-45"
+googleAnalytics = "UA-166238147-1"
 disqusShortname = "hemil10"
 
 [params]
