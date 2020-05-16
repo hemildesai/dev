@@ -1,0 +1,30 @@
+<!-- Reference: https://metalblueberry.github.io/post/howto/2019-11-23_add_plots_with_hugo_shortcodes/ -->
+{{ $src := .Get "src" }}
+{{ $name := .Get "name" }}
+{{ $resource := (.Page.Resources.GetMatch $src).RelPermalink }}
+{{ $data := readFile $resource }}
+<div class="figure">
+    <div class="figure-plot" id="{{ $name }}">
+        Still rendering plot. Please see console for details.
+    </div>
+    <figcaption>{{ .Get "caption" }}</figcaption>
+    <script async>
+        function draw() {
+            var plot = document.getElementById("{{ $name }}");
+            if (plot == null) {
+                console.log("The plot name is not defined")
+                return
+            }
+
+            fig = JSON.parse("{{ $data }}");
+
+            if (!fig) {
+                plot.innerText = "ERROR: fig variable is not defined"
+                return
+            }
+            plot.innerText = null
+            Plotly.plot(plot, fig);
+        }
+        draw()
+    </script>
+</div>
