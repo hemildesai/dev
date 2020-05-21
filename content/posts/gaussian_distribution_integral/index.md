@@ -4,6 +4,7 @@ date: 2020-05-14T16:22:04+05:30
 description: "Integral solution for the Gaussian Distribution PDF."
 math: true
 plotly: true
+tags: ["integration", "gaussian distribution", "probability"]
 ---
 
 ## Introduction
