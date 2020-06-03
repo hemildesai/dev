@@ -12,18 +12,18 @@
 		</div>
 		<div class="post">
 			<div class="post-header">
-				{{ if and (ne .Date.Year 1) (eq .Type "posts") }}
-					<div class="meta">
-						<div class="date">
-							<span class="day">{{ dateFormat "02" .Date }}</span>
-							<span class="rest">{{ if $.Site.Data.month }}{{ index $.Site.Data.month (printf "%d" .Date.Month) }} {{ .Date.Year }}{{ else }}{{ dateFormat "Jan 2006" .Date }}{{ end }}</span>
-						</div>
-					</div>
-				{{ end }}
 				<div class="matter">
 					<h1 class="title">{{ .Title }}</h1>
 				</div>
 			</div>
+
+			{{ if and (ne .Date.Year 1) (eq .Type "posts") }}
+				<div class="meta">
+					<div class="date">
+						<span class="rest">{{ dateFormat "02" .Date }} {{ if $.Site.Data.month }}{{ index $.Site.Data.month (printf "%d" .Date.Month) }}, {{ .Date.Year }}{{ else }}{{ dateFormat "Jan 2006" .Date }}{{ end }}</span>
+					</div>
+				</div>
+			{{ end }}
 
 			<div class="markdown">
 				{{ .Content }}
