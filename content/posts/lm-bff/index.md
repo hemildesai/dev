@@ -18,8 +18,6 @@ However, using 175 Billion parameter models is not suitable in most practical sc
 1. Prompt based fine-tuning and automatic prompt generation
 2. Dynamically and selectively incorporating demonstrations into each prompt's context
 
-The code for the paper can be found at https://github.com/princeton-nlp/LM-BFF.
-
 ### Prompt based fine-tuning
 In naive terms, a prompt is the input sequence to a language model. Prompt based prediction involves treating the downstream task as a Language Modeling problem, where you incorporate the task's context into the prompt and use the token predicted by the language model as a prediction of the downstream task. This is done by designing the prompt in an innovative way, a form of art that requires both domain expertise and the inner workings of the model. The authors suggest using prompt-based prediction for fine-tuning, and also suggest a novel method to automatically generate prompts.
 
@@ -136,7 +134,50 @@ The authors sample multiple such demonstration sets. During training, they use o
 If the examples in the demonstration set are very different from each other or very different from the input sequence, the performance can be negatively impacted. To address this, the authors only sample examples close to the input. They do this by using [Sentence-BERT](https://arxiv.org/abs/1908.10084). This gives the sentence embeddings for each sequence. The authors only consider the top 50% of samples similar to the input measured by their cosine similarity.
 
 ## Takeaways
+The key takeaways can be best summarized by the tables in the paper. The authors compare their approach to standard classical fine-tuning, fine-tuning on the entire parent training set, a majority baseline where you just predict the most frequent class, zero-shot learning and GPT3 style "in-context" prediction with demonstrations. Massive improvements are seen on all tasks, summarized by this table below (auto and man refer to automatic and manual prompt generation)
+{{<figure src="images/table1.png" class="blogimg" alt="Table 1">}}
 
+### Ensembles
+Using ensembles help in most cases, and this is no exception. The authors form ensembles by selecting a group of automatic prompts. They compare them with a group of manual prompts. The results are as follows
+{{<figure src="images/table2.png" class="blogimg" alt="Table 2">}}
+
+### Automatic Prompts
+Remember the chicken and egg problem in automatic prompts? The authors deal with it in three ways:
+- Generate labels using manual templates (Auto L)
+- Generate templates using manual labels (Auto T)
+- Joint variant, generate one after the other starting from manual labels (Auto L+T)
+
+Let's take a look at the result as well as some generated prompts.
+{{<figure src="images/table3.png" class="blogimg" alt="Table 3">}}
+{{<figure src="images/table4.png" class="blogimg" alt="Table 4">}}
+
+The results look comparable at the very least, and better in two tasks. The samples look mostly reasonable, with the exception of some bias and irregularities highlighted in red.
+
+### Incorporating Demonstrations
+Uniform sampling of demonstrations combined with sentence similarity also leads to gains in results. Since SentenceBERT is trained on SNLI and MNLI, the authors also experiment with a mean pooling encoder using RoBERTa-large.
+{{<figure src="images/table5.png" class="blogimg" alt="Table 5">}}
+The results show that uniform sampling along with some sentence similarity based filtering always performs better.
+
+### Sampling efficiency
+The best way to summarize this is by looking at the plots
+{{<figure src="images/kval.png" class="blogimg" alt="K value vs accuracy">}}
+
+The plots show that for a few-shot setting when the number of examples per class is limited, LM-BFF vastly outperforms classical fine-tuning. However, classical fine-tuning seems to catch-up as the number of examples increase. Still LM-BFF seems to work pretty well even with higher number of examples per class.
 ## Related Work
+### GPT Series
+The development of prompt based few shot learning has been fueled by the GPT series ([GPT](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf), [GPT 2](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf), [GPT-3](https://arxiv.org/abs/2005.14165)). Specifically, GPT-3 showed amazing results on few shot learning, as illustrated by the tweet shared at the beginning of the post. The paper develops on the key concepts of GPT-3 - prompting and in-context learning, and adapts it to medium sized Masked Language Models since using 175 billion parameters is not pragmatic in most settings.
+
+### PET
+The [PET](https://arxiv.org/pdf/2001.07676.pdf) paper focuses on a semi-supervised setting in which a large set of unlabeled examples are provided. They use the prompt based approach to generate a soft labeled dataset. Basically, they run the unlabeled examples through the prompt templates in a pre-trained language model and use the predictions to generate soft labels. This works great for a semi-supervised training approach. The prompt based templating is very similar between PET and LM-BFF.
+
+### Fine-Tuning approaches
+Papers like [Fine-Tuning Pretrained Language Models: Weight Initializations, Data Orders, and Early Stopping](https://arxiv.org/pdf/2002.06305.pdf) develop better and more efficient fine-tuning methods building on top of the classical fine-tuning pipeline. They do so by improving optimization and regularization techniques to stabilize fine-tuning on a smaller dataset compared to the larger dataset used in pre-training. In LM-BFF, the authors use standard optimization and regularization techniques and focus their efforts on prompt-based fine-tuning.
+
+### Meta-Learning
+Meta-learning approaches for few shot learning like [LEOPARD](https://arxiv.org/pdf/1911.03863.pdf) use optimization based meta-learning with the hope to achieve generalization across a diverse set of NLP tasks. This meta learning helps achieve good performance on tasks never seen during training, with as few as 4 examples per class. While this can also be considered as few-shot learning, LM-BFF differs in the sense that they do not use any sort of meta-learning.
+
+### Intermediate Learning
+In recent work like [UFO-ENTAIL](https://arxiv.org/pdf/2010.02584.pdf), the authors pre-train an entailment model, and use it on new downstream entailment tasks in a few shot setting.  This differs from LM-BFF in the sense that it uses an intermediate entailment dataset to pre-train an entailment model on top of the language model. However, LM-BFF does not use any intermediary tasks or datasets and just directly uses the few-shot dataset itself.
 
 ## Conclusion
+LM-BFF can be summed up as a set of tools that help achieve great performance for downstream tasks with a few-shot setting. The code for the paper can be found at https://github.com/princeton-nlp/LM-BFF. It would be amazing to see integrations of LM-BFF with popular libraries like transformers so that the tools can be easily used in real world applications.
