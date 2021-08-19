@@ -27,6 +27,8 @@ My second quarter, I took courses in ML architecture, Reinforcement Learning and
 
 ### Links
 
+- [Blockchain Lectures](https://drive.google.com/drive/folders/145RtzCCz10YdrIqpBJVeEp_x83uvTcOp)
+
 #### Project Reports
 - [Report on Yield Farming](./cs188.pdf)
 - [Parallelizing Multi-Head Attention on GPUs](./cs259.pdf)
