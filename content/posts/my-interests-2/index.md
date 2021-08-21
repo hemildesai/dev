@@ -1,5 +1,5 @@
 ---
-title: "My Interests - 2021"
+title: "What have I been upto in 2021?"
 date: 2021-08-19T00:41:46-07:00
 draft: false
 description: "My areas of interest during 2021 (upto August)."
